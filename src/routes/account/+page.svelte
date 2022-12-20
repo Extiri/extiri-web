@@ -17,6 +17,7 @@
   let newUserEmail = "";
   let newUserPassword = "";
   let newUserPasswordRepeated = "";
+  let agreedToTermsOfService = false;
 
   let loginEmail = "";
   let loginPassword = "";
@@ -28,6 +29,10 @@
   }
 
   async function register() {
+    if (!agreedToTermsOfService) {
+      alert("You have to agree to Terms Of Service to register.");
+    }
+
     loginEmail = "";
     loginPassword = "";
 
@@ -300,7 +305,7 @@
         developer.
       </p>
       <button class="button center" on:click={() => (isLoggedIn = false)}
-        >Register / Log in</button
+        >Register / Login</button
       >
     {/await}
   {:else}
@@ -360,11 +365,16 @@
           />
         </div>
 
+        <div class="form-control">
+          <label class="label cursor-pointer">
+            <input type="checkbox" class="toggle" bind:checked={agreedToTermsOfService} />
+            <span class="label-text ml-5">I agree to <a href="https://extiri.com/codemenu/terms_of_services.html" class="hover:underline underline-offset-4"><b>Terms of Service</b></a>.</span> 
+          </label>
+        </div>
+
         <br />
 
-        <button class="btn btn-primary mb-8" on:click={() => register()}
-          >Register</button
-        >
+        <button class="btn btn-primary mb-8" on:click={() => register()} disabled={!agreedToTermsOfService}>Register</button>
       </div>
       <div class="grid card bg-base-300 rounded-box place-items-center">
         <h1 class="card-title mt-8">Login</h1>
