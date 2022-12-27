@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import '../../app.css';
 	import { goto } from '$app/navigation';
 	import md5 from 'md5';
@@ -9,7 +9,12 @@
 	let isLoggedIn = false;
 	let isDeletingAccount = false;
 
-	let promise = Promise.resolve([]);
+	let promise: Promise<User> = Promise.resolve({ name: "", email: "" });
+
+  interface User {
+    name: string
+    email: string
+  }
 
 	let profileImage = '';
 
@@ -22,7 +27,7 @@
 	let loginEmail = '';
 	let loginPassword = '';
 
-	function setAvatar(email) {
+	function setAvatar(email: string) {
 		let hash = md5(email);
 		profileImage = 'https://www.gravatar.com/avatar/' + hash + '?d=retro?s=300.jpg';
 	}
@@ -152,7 +157,7 @@
 		}
 	}
 
-	function saveToken(token) {
+	function saveToken(token: string) {
 		if (browser) {
 			localStorage.setItem('token', token);
 		}
@@ -181,8 +186,7 @@
 		if (response.ok) {
 			isLoggedIn = true;
 
-			let text = await response.text();
-			let info = JSON.parse(text);
+			let info = await (response.json() as Promise<User>);
 
 			setAvatar(info.email);
 
