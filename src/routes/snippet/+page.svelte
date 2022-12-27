@@ -1,22 +1,31 @@
-<script>
+<script lang="ts">
 	import '../../app.css';
 	import { goto } from '$app/navigation';
 	import escape from 'lodash.escape';
 	import CodeMirror from '../../CodeMirror.svelte';
-	import sdk from 'https://unpkg.com/@stackblitz/sdk@1/bundles/sdk.m.js';
+	import sdk from '@stackblitz/sdk';
 
 	const browser = typeof window !== 'undefined';
 
 	let id = '';
 	let creatorId = '';
-	let promise = Promise.resolve([]);
+	let promise: Promise<Snippet> = Promise.resolve({
+		id: '',
+		title: '',
+		code: '',
+		creator: '',
+		desc: '',
+		language: '',
+		category: ''
+	});
 	let creatorName = 'Loading...';
 	let isLoggedInUserTheCreator = false;
 
 	/// Check if language is supported before using.
-	function generateFilesForLanguage(lang, code) {
+	function generateFilesForLanguage(lang: string, code: string): [Record<string, string>, string] {
 		if (lang === 'html') {
-			return { files: { 'index.html': code }, mainFile: 'index.html' };
+			let files: Record<string, string> = { 'index.html': code };
+			return [files, 'index.html'];
 		}
 
 		let extension;
@@ -34,30 +43,31 @@
 
 		let mainFile = 'index.' + extension;
 
-		let files = { 'index.html': '' };
+		let files: Record<string, string> = { 'index.html': '' };
+		files['index.html'] = '';
 		files[mainFile] = code;
 
-		return { files, mainFile };
+		return [files, mainFile];
 	}
 
-	function isStackBlitzAvailable(lang) {
+	function isStackBlitzAvailable(lang: string) {
 		console.log(lang);
 		return lang === 'typescript' || lang === 'javascript' || lang === 'html';
 	}
 
-	function openInStackBlitz(code, lang, description, title) {
+	function openInStackBlitz(code: string, lang: string, description: string, title: string) {
 		if (!isStackBlitzAvailable(lang)) {
 			alert('Language ' + lang + ' is not supported.');
 			return;
 		}
 
-		let { files, mainFile } = generateFilesForLanguage(lang, code);
+		let [files, mainFile] = generateFilesForLanguage(lang, code);
 
 		sdk.openProject(
 			{
 				title: title,
 				description: description,
-				template: lang,
+				template: lang as 'html' | 'typescript' | 'javascript',
 				files: files,
 				settings: {
 					compile: {
@@ -80,17 +90,31 @@
 		sound.play();
 	}
 
-	async function getUser(id) {
+	interface User {
+		id: string;
+		name: string;
+	}
+
+	async function getUser(id: string) {
 		let response = await fetch('https://extiri.com/api/1/users/get/' + id);
 
 		if (response.ok) {
-			let text = await response.text();
-			let json = JSON.parse(text);
-			creatorId = json.id;
-			return json.name;
+			let user = await (response.json() as Promise<User>);
+			creatorId = user.id;
+			return user.name;
 		} else {
 			throw response.status;
 		}
+	}
+
+	interface Snippet {
+		id: string;
+		language: string;
+		title: string;
+		code: string;
+		desc: string;
+		creator: string;
+		category: string;
 	}
 
 	async function getSnippetsDetail() {
@@ -99,15 +123,16 @@
 			let response = await fetch('https://extiri.com/api/1/snippets/get/' + id);
 
 			if (response.ok) {
-				let text = await response.text();
-				let parsed = JSON.parse(text);
-				creatorName = await getUser(parsed.creator);
+				let snippet = await (response.json() as Promise<Snippet>);
+				creatorName = await getUser(snippet.creator);
 				checkIfCreator();
-				return parsed;
+				return snippet;
 			} else {
 				throw response.status;
 			}
 		}
+
+		throw 'App is run o server-side.';
 	}
 
 	async function deleteSnippet() {

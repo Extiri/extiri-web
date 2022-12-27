@@ -9,12 +9,12 @@
 	let isLoggedIn = false;
 	let isDeletingAccount = false;
 
-	let promise: Promise<User> = Promise.resolve({ name: "", email: "" });
+	let promise: Promise<User> = Promise.resolve({ name: '', email: '' });
 
-  interface User {
-    name: string
-    email: string
-  }
+	interface User {
+		name: string;
+		email: string;
+	}
 
 	let profileImage = '';
 

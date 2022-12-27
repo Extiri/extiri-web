@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import '../app.css';
 	import { languages } from '../langStyles.js';
 	import { goto } from '$app/navigation';
@@ -22,8 +22,39 @@
 	let isLoggedIn = false;
 	let isLoading = false;
 
-	let promise = Promise.resolve([]);
-	let userDetailPromise = Promise.resolve([]);
+	let snippetsPromise: Promise<Snippet[] | [Snippet]> = Promise.resolve(Array<Snippet>());
+	let userDetailPromise: Promise<User> = Promise.resolve({ id: '', name: '', email: '' });
+
+	interface User {
+		id: string;
+		name: string;
+		email: string;
+	}
+
+	interface Snippet {
+		id: string;
+		language: string;
+		title: string;
+		code: string;
+		desc: string;
+		creator: string;
+	}
+
+	interface Metadata {
+		per: number;
+		total: number;
+		page: number;
+	}
+
+	interface Page {
+		items: [Snippet];
+		metadata: Metadata;
+	}
+
+	interface Snippets {
+		totalNumberOfResults: number;
+		page: Page;
+	}
 
 	let pages = [1];
 
@@ -34,37 +65,35 @@
 	let creator = '';
 
 	function searchSnippets() {
-		promise = getSnippets();
+		snippetsPromise = getSnippets();
 	}
 
 	function nextPage() {
 		if (currentPage != pages.at(-1) && !isLoading) {
 			currentPage += 1;
-			promise = getSnippets();
+			snippetsPromise = getSnippets();
 		}
 	}
 
-	function showUsersSnippets(userID) {
+	function showUsersSnippets(userID: string) {
 		if (creator != '') {
 			creator = '';
-			promise = getSnippets();
+			snippetsPromise = getSnippets();
 		} else {
 			creator = userID;
-			promise = getSnippets();
+			snippetsPromise = getSnippets();
 		}
 	}
 
 	function previousPage() {
 		if (currentPage != 1 && !isLoading) {
 			currentPage -= 1;
-			promise = getSnippets();
+			snippetsPromise = getSnippets();
 		}
 	}
 
-	function calculatePages(response) {
-		let total = Math.ceil(
-			parseInt(escape(response.totalNumberOfResults)) / parseInt(escape(response.page.metadata.per))
-		);
+	function calculatePages(response: Snippets) {
+		let total = Math.ceil(response.totalNumberOfResults / response.page.metadata.per);
 
 		if (total <= 1) {
 			pages = [1];
@@ -117,12 +146,11 @@
 		let response = await fetch(api);
 
 		if (response.ok) {
-			let text = await response.text();
-			let json = JSON.parse(text);
+			let snippets = await (response.json() as Promise<Snippets>);
 
-			calculatePages(json);
+			calculatePages(snippets);
 			isLoading = false;
-			return json.page.items;
+			return snippets.page.items;
 		} else {
 			let text = await response.text();
 			isLoading = false;
@@ -140,7 +168,7 @@
 
 	let profileImage = '';
 
-	function setAvatar(email) {
+	function setAvatar(email: string) {
 		let hash = md5(email);
 		profileImage = 'https://www.gravatar.com/avatar/' + hash + '?d=retro?s=300.jpg';
 	}
@@ -155,8 +183,7 @@
 		if (response.ok) {
 			isLoggedIn = true;
 
-			let text = await response.text();
-			let info = JSON.parse(text);
+			let info = await (response.json() as Promise<User>);
 
 			setAvatar(info.email);
 
@@ -168,9 +195,12 @@
 		}
 	}
 
-	promise = getSnippets().catch((reason) => {});
-
-	userDetailPromise = getUserDetail().catch((reason) => {});
+	snippetsPromise = getSnippets().catch((reason) => {
+		return Array<Snippet>();
+	});
+	userDetailPromise = getUserDetail().catch((reason) => {
+		return { id: '', name: '', email: '' };
+	});
 </script>
 
 <div class="main">
@@ -186,10 +216,10 @@
 
 			<div class="min-h-screen">
 				<div class="grid 2xl:grid-cols-2 gap-x-8 gap-y-10 grid-cols-1 mb-10 mt-8">
-					{#await promise}
+					{#await snippetsPromise}
 						<h1>Loading...</h1>
-					{:then json}
-						{#each json as snippet (escape(snippet.id))}
+					{:then snippets}
+						{#each snippets as snippet (escape(snippet.id))}
 							<div
 								style="width: 550px"
 								class="card md:card-side md:h-96 h-fit bg-base-300 shadow-xl"
@@ -324,7 +354,7 @@
 					<select
 						class="select select-bordered w-full max-w-xs"
 						bind:value={language}
-						on:change={() => (promise = getSnippets())}
+						on:change={() => (snippetsPromise = getSnippets())}
 					>
 						<option value="All">All</option>
 						{#each languages as language (language)}
@@ -341,7 +371,7 @@
 					<select
 						class="select select-bordered w-full max-w-xs"
 						bind:value={currentCategory}
-						on:change={() => (promise = getSnippets())}
+						on:change={() => (snippetsPromise = getSnippets())}
 					>
 						{#each Categories as category (category.key)}
 							<option value={category}>{category.key}</option>
