@@ -13,6 +13,7 @@
 	},
 	"devDependencies": {
 		"@sveltejs/kit": "^1.0.0-next.587",
+		"@sveltejs/adapter-vercel": "^1.0.0",
 		"@types/lodash.escape": "^4.0.7",
 		"@types/md5": "^2.3.2",
 		"@typescript-eslint/eslint-plugin": "^5.45.0",
@@ -47,8 +48,6 @@
 		"@codemirror/legacy-modes": "6.1.0",
 		"@codemirror/theme-one-dark": "6.1.0",
 		"@stackblitz/sdk": "^1.8.1",
-		"@sveltejs/adapter-vercel": "next",
-		"@sveltejs/kit": "next",
 		"autoprefixer": "^10.4.2",
 		"codemirror": "^6.0.1",
 		"daisyui": "^2.6.0",
