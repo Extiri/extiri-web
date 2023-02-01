@@ -6,7 +6,7 @@ const config = {
 	preprocess: vitePreprocess(),
 	kit: {
 		csp: {
-			mode:'nonce',
+			mode:'auto',
 			directives: {
         'script-src': ['self']
       }
