@@ -5,6 +5,12 @@ import { vitePreprocess } from '@sveltejs/kit/vite';
 const config = {
 	preprocess: vitePreprocess(),
 	kit: {
+		csp: {
+			mode:'nonce',
+			directives: {
+        'script-src': ['self']
+      }
+		},
 		adapter: adapter()
 	}
 };
