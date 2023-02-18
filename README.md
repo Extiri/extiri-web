@@ -4,6 +4,10 @@ Extiri Web is the place where Extiri's web apps are placed. Currently, there is 
 
 It uses SvelteKit, TailwindCSS and DaisyUI. It is set to be deployed using Vercel.
 
+# Security
+
+2 vulnerabilities of moderate (CVE-2023-23936) and high (CVE-2023-24807) severity were detected in undici, extiri-web's dependency. Commit c8ce7a06c2a10b250bbf4c997cd40845da5579a1 updated undici to a patched version. It is recommended not to use versions before this commit.
+
 ## Developing
 
 Once you've acquired and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
