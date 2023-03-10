@@ -8,7 +8,7 @@ module.exports = {
 		logs: true,
 		rtl: false,
 		prefix: '',
-		darkTheme: 'night',
-		themes: ['night', 'night']
+		darkTheme: 'lofi',
+		themes: ['lofi']
 	}
 };

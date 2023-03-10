@@ -204,9 +204,6 @@
 </script>
 
 <div class="navbar bg-base-300 shadow">
-	<div class="flex-1">
-		<a class="btn btn-ghost normal-case text-xl">Extiri</a>
-	</div>
 	<div class="flex-none">
 		<button class="btn btn-square btn-ghost" on:click={() => goto('/')}> Store </button>
 	</div>

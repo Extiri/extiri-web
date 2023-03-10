@@ -210,7 +210,7 @@
 			<label
 				for="main-drawer"
 				style="z-index: 2"
-				class="btn btn-primary drawer-button lg:hidden fixed z-90 bottom-10 right-8 w-20 h-20 rounded-full flex justify-center items-center text-black text-4xl shadow-2xl"
+				class="btn btn-primary drawer-button lg:hidden fixed z-90 bottom-10 right-8 w-20 h-20 rounded-full flex justify-center items-center text-white text-4xl shadow-2xl"
 				>☰</label
 			>
 

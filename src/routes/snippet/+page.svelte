@@ -1,3 +1,10 @@
+<style>
+	.main {
+		background-color: #282C34;
+		height: 100vh;
+	}
+</style>
+
 <script lang="ts">
 	import '../../app.css';
 	import { goto } from '$app/navigation';
@@ -190,16 +197,13 @@
 
 <div class="main">
 	<div class="navbar bg-base-300 shadow">
-		<div class="flex-1">
-			<a class="btn btn-ghost normal-case text-xl">Extiri</a>
-		</div>
 		<div class="flex-none">
 			<button class="btn btn-square btn-ghost" on:click={() => goto('/')}> Store </button>
 		</div>
 	</div>
 
 	<div class="sidebar">
-		<div class="sidebar-content">
+		<div class="sidebar-content bg-white">
 			{#if id !== undefined && id !== ''}
 				{#await promise}
 					<h1>Loading...</h1>
