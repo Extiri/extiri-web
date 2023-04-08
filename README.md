@@ -6,7 +6,7 @@ It uses SvelteKit, TailwindCSS and DaisyUI. It is set to be deployed using Verce
 
 # Security
 
-2 vulnerabilities of moderate (CVE-2023-23936) and high (CVE-2023-24807) severity were detected in undici, extiri-web's dependency. Commit c8ce7a06c2a10b250bbf4c997cd40845da5579a1 updated undici to a patched version. It is recommended not to use versions before this commit.
+2 vulnerabilities of high (CVE-2023-29008, CVE-2023-29003) severity were detected in SvelteKit. The newest release 1.1.0 updates it to the patched version. It is recommended not to use versions before this release.
 
 ## Developing
 
