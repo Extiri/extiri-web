@@ -16,7 +16,7 @@
 		"@sveltejs/adapter-vercel": "^1.0.0",
 		"@types/lodash.escape": "^4.0.7",
 		"@types/md5": "^2.3.2",
-		"@typescript-eslint/eslint-plugin": "^5.45.0",
+		"@typescript-eslint/eslint-plugin": "^5.59.6",
 		"@typescript-eslint/parser": "^5.56.0",
 		"eslint": "^8.28.0",
 		"eslint-config-prettier": "^8.5.0",
