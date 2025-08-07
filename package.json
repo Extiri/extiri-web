@@ -12,8 +12,8 @@
 		"format": "prettier --plugin-search-dir . --write ."
 	},
 	"devDependencies": {
-		"@sveltejs/kit": "^1.30.4",
-		"@sveltejs/adapter-vercel": "^1.0.0",
+		"@sveltejs/kit": "^2.27.3",
+		"@sveltejs/adapter-vercel": "^5.8.2",
 		"@types/lodash.escape": "^4.0.7",
 		"@types/md5": "^2.3.2",
 		"@typescript-eslint/eslint-plugin": "^8.0.1",
