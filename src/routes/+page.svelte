@@ -328,7 +328,7 @@
 </script>
 
 <svelte:head>
-	<title>Extiri Snippets — Store</title>
+	<title>Snippex — Store</title>
 </svelte:head>
 
 {#if actionMessage}
@@ -340,10 +340,8 @@
 <div class="store-page">
 	<header class="store-header">
 		<div class="store-header__brand">
-			<a class="store-logo" href="https://extiri.com" target="_blank" rel="noreferrer">
-				<img src="/extiri-text-only.png" alt="Extiri logo" />
-			</a>
-			<p class="store-header__tagline">snippex — handpicked code that saves time on every project.</p>
+			<button class="store-logo" on:click={() => goto('/')}>Snippex</button>
+			<span class="store-header__byline">Crafted by <a href="https://extiri.com" target="_blank" rel="noreferrer"><img style="height: 15px !important; display: inline;" src="/extiri-text-only.png" alt="Extiri logo" /></a></span>
 		</div>
 		<div class="store-header__actions">
 			{#if isLoggedIn}
@@ -359,9 +357,9 @@
 
 	<section class="store-hero">
 		<div class="store-hero__content">
-			<p class="store-eyebrow">Extiri Snippet Library</p>
+			<p class="store-eyebrow">Snippex Library</p>
 			<h1>Thoughtful snippets that make shipping smoother.</h1>
-			<p>Explore snippex by Extiri, remix ready-made building blocks, and stay in flow while you build.</p>
+			<p>Explore Snippex, remix ready-made building blocks, and stay in flow while you build.</p>
 			<div class="store-hero__meta">
 				<div class="store-hero__stat">
 					<span>Catalog</span>
@@ -487,7 +485,7 @@
 						{:else}
 							{totalResults === 0
 								? 'No snippets match the filters yet.'
-								: `Showing curated snippets, page ${currentPage}.`}
+								: `page ${currentPage}`}
 						{/if}
 					</p>
 				</div>
@@ -583,6 +581,13 @@
 		font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 	}
 
+	@font-face {
+		font-family: 'Borel';
+		font-style: normal;
+		font-weight: 400;
+		src: url('/Borel-Regular.ttf') format('truetype');
+	}
+
 	.store-page {
 		min-height: 100vh;
 		display: flex;
@@ -620,6 +625,9 @@
 		border: none;
 		cursor: pointer;
 		padding: 0;
+		font-family: 'Borel', cursive;
+		font-size: clamp(1.8rem, 3vw, 2.4rem);
+		color: #0f172a;
 	}
 
 	.store-logo:focus-visible {
@@ -627,15 +635,14 @@
 		outline-offset: 3px;
 	}
 
-	.store-logo img {
-		height: clamp(24px, 3vw, 32px);
-		width: auto;
-		display: block;
-	}
-
 	.store-header__tagline {
 		color: #475569;
 		font-size: 0.95rem;
+	}
+
+	.store-header__byline {
+		font-size: 0.8rem;
+		color: #94a3b8;
 	}
 
 	.store-header__actions {
@@ -807,7 +814,7 @@
 		flex-direction: column;
 		gap: 1.5rem;
 		width: 100%;
-		max-width: 320px;
+		max-width: 350px;
 	}
 
 	.sidebar-card {
@@ -854,12 +861,11 @@
 		color: #64748b;
 	}
 
-	.sidebar-search__control {
-		display: flex;
-		gap: 0.5rem;
-		align-items: stretch;
-		flex-wrap: nowrap;
-	}
+		.sidebar-search__control {
+			display: grid;
+			grid-template-columns: 1fr auto;
+			gap: 0.5rem;
+		}
 
 	.sidebar-search__control input {
 		flex: 1;
@@ -881,6 +887,9 @@
 		padding: 0.65rem 0.95rem;
 		font-weight: 600;
 		flex-shrink: 0;
+ 		display: inline-flex;
+ 		align-items: center;
+ 		justify-content: center;
 		background-color: #0f172a;
 		color: #f8fafc;
 		cursor: pointer;
@@ -888,7 +897,7 @@
 
 	@media (max-width: 640px) {
 		.sidebar-search__control {
-			flex-direction: column;
+			grid-template-columns: 1fr;
 		}
 
 		.sidebar-search__control button {
@@ -1074,7 +1083,7 @@
 	.snippet-card__preview {
 		border-top: 1px solid #e2e8f0;
 		border-bottom: 1px solid #e2e8f0;
-		background-color: #0b1120;
+		background-color: #282C34;
 		flex: 1 1 auto;
 		max-height: 340px;
 		overflow: auto;

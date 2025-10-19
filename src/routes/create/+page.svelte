@@ -116,7 +116,7 @@
 </script>
 
 <svelte:head>
-	<title>Extiri Snippets — Create</title>
+	<title>Snippex — Create</title>
 </svelte:head>
 
 {#if actionMessage}
@@ -128,10 +128,9 @@
 <div class="create-page">
 	<header class="create-header">
 		<div class="create-header__brand">
-			<a class="create-logo" href="https://extiri.com" target="_blank" rel="noreferrer">
-				<img src="/extiri-text-only.png" alt="Extiri logo" />
-			</a>
-			<span>snippex helps you craft reusable snippets without breaking flow.</span>
+			<button class="create-logo" on:click={() => goto('/')}>Snippex</button>
+			<span>Snippex helps you craft reusable snippets without breaking flow.</span>
+			<span class="create-header__byline">Built with care by Extiri</span>
 		</div>
 		<button class="create-header__link" on:click={() => goto('/')}>Back to Library</button>
 	</header>
@@ -229,6 +228,13 @@
 		font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 	}
 
+	@font-face {
+		font-family: 'Borel';
+		font-style: normal;
+		font-weight: 400;
+		src: url('/Borel-Regular.ttf') format('truetype');
+	}
+
 	.create-page {
 		min-height: 100vh;
 		display: flex;
@@ -264,17 +270,19 @@
 		align-items: center;
 		cursor: pointer;
 		align-self: flex-start;
-	}
-
-	.create-logo img {
-		height: clamp(24px, 3vw, 32px);
-		width: auto;
-		display: block;
+		font-family: 'Borel', cursive;
+		font-size: clamp(1.8rem, 3vw, 2.4rem);
+		color: #0f172a;
 	}
 
 	.create-header__brand span {
 		color: #475569;
 		font-size: 0.95rem;
+	}
+
+	.create-header__byline {
+		font-size: 0.8rem;
+		color: #94a3b8;
 	}
 
 	.create-header__link {

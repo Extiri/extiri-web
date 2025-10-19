@@ -256,7 +256,7 @@
 </script>
 
 <svelte:head>
-	<title>Extiri Snippets — Account</title>
+	<title>Snippex — Account</title>
 </svelte:head>
 
 {#if actionMessage}
@@ -268,10 +268,9 @@
 <div class="account-page">
 	<header class="account-header">
 		<div class="account-header__brand">
-			<a class="account-logo" href="https://extiri.com" target="_blank" rel="noreferrer">
-				<img src="/extiri-text-only.png" alt="Extiri logo" />
-			</a>
-			<span>Manage your snippex workspace and keep your favourite snippets close.</span>
+			<button class="account-logo" on:click={() => goto('/')}>Snippex</button>
+			<span>Manage your Snippex workspace and keep your favourite snippets close.</span>
+			<span class="account-header__byline">Supported by Extiri</span>
 		</div>
 		<button class="account-header__link" on:click={() => goto('/')}>Back to Library</button>
 	</header>
@@ -432,6 +431,13 @@
 		font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 	}
 
+	@font-face {
+		font-family: 'Borel';
+		font-style: normal;
+		font-weight: 400;
+		src: url('/Borel-Regular.ttf') format('truetype');
+	}
+
 	.account-page {
 		min-height: 100vh;
 		display: flex;
@@ -467,17 +473,19 @@
 		align-items: center;
 		cursor: pointer;
 		align-self: flex-start;
-	}
-
-	.account-logo img {
-		height: clamp(24px, 3vw, 32px);
-		width: auto;
-		display: block;
+		font-family: 'Borel', cursive;
+		font-size: clamp(1.8rem, 3vw, 2.4rem);
+		color: #0f172a;
 	}
 
 	.account-header__brand span {
 		color: #475569;
 		font-size: 0.95rem;
+	}
+
+	.account-header__byline {
+		font-size: 0.8rem;
+		color: #94a3b8;
 	}
 
 	.account-header__link {

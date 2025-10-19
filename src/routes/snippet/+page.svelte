@@ -4,6 +4,13 @@
 		font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 	}
 
+	@font-face {
+		font-family: 'Borel';
+		font-style: normal;
+		font-weight: 400;
+		src: url('/Borel-Regular.ttf') format('truetype');
+	}
+
 	.page {
 		min-height: 100vh;
 		display: flex;
@@ -164,7 +171,7 @@
 		border-radius: 1rem;
 		overflow: auto;
 		border: 1px solid #e2e8f0;
-		background-color: #0b1120;
+		background-color: #282C34;
 		max-height: 600px;
 	}
 
@@ -208,14 +215,15 @@
 		background: transparent;
 		padding: 0;
 		cursor: pointer;
+		font-family: 'Borel', cursive;
+		font-size: clamp(1.6rem, 3vw, 2.2rem);
+		color: #f8fafc;
 	}
 
-	.page-nav__logo img {
-		height: clamp(22px, 3vw, 30px);
-		width: auto;
-		display: block;
+	.page-nav__tagline {
+		color: rgba(248, 250, 252, 0.7);
+		font-size: 0.85rem;
 	}
-
 	.loading-state {
 		display: flex;
 		flex-direction: column;
@@ -612,7 +620,7 @@
 </script>
 
 <svelte:head>
-	<title>{snippetTitle && snippetTitle.trim() !== '' ? escape(snippetTitle) + ' — Extiri' : 'Extiri Snippet'}</title>
+	<title>{snippetTitle && snippetTitle.trim() !== '' ? escape(snippetTitle) + ' — Snippex' : 'Snippex Snippet'}</title>
 </svelte:head>
 
 {#if actionMessage}
@@ -624,13 +632,10 @@
 <div class="page">
 	<div class="navbar page-nav">
 		<div class="flex-1 flex items-center gap-3">
-			<a class="page-nav__logo" href="https://extiri.com" target="_blank" rel="noreferrer">
-				<img src="/extiri-text-only.png" alt="Extiri logo" />
-			</a>
-			<button class="btn btn-ghost text-base-100 normal-case text-lg font-semibold" on:click={() => goto('/')}>
-				snippex library
+			<button class="page-nav__logo" on:click={() => goto('/')}>
+				Snippex
 			</button>
-			<span class="hidden lg:inline text-sm opacity-70">A reliable home for reusable snippets.</span>
+			<span class="hidden lg:inline page-nav__tagline">Reusable snippets, carefully gathered by Extiri.</span>
 		</div>
 		<div class="flex-none flex items-center gap-3">
 			<button
@@ -713,8 +718,6 @@
 							</button>
 						{/if}
 					</div>
-
-					<p class="helper-text">Keep this tab handy—every action stays ready for the next tweak.</p>
 				{:catch error}
 					<div class="error-state">
 						<h2>We hit a snag.</h2>
