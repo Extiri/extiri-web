@@ -270,6 +270,15 @@
 	let messageTimeout: ReturnType<typeof setTimeout> | undefined;
 	let shareAvailable = browser && Boolean((navigator as ShareCapableNavigator).share);
 
+	let snippetTitle = '';
+
+	// Update page title when the snippet promise resolves
+	promise.then((s) => {
+		if (s && s.title) snippetTitle = s.title;
+	}).catch(() => {
+		/* ignore */
+	});
+
 	function notify(message: string, type: 'success' | 'error' = 'success') {
 		actionMessage = message;
 		actionType = type;
@@ -581,6 +590,10 @@
 		}
 	});
 </script>
+
+<svelte:head>
+	<title>{snippetTitle && snippetTitle.trim() !== '' ? escape(snippetTitle) + ' — Extiri' : 'Extiri Snippet'}</title>
+</svelte:head>
 
 {#if actionMessage}
 	<div class="toast {actionType === 'error' ? 'toast-error' : 'toast-success'}">

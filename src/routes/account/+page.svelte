@@ -203,6 +203,10 @@
 	}
 </script>
 
+<svelte:head>
+	<title>Extiri Snippets — Account</title>
+</svelte:head>
+
 <div class="navbar bg-base-300 shadow">
 	<div class="flex-none">
 		<button class="btn btn-square btn-ghost" on:click={() => goto('/')}> Store </button>

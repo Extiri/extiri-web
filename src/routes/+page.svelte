@@ -203,6 +203,10 @@
 	});
 </script>
 
+<svelte:head>
+	<title>Extiri Snippets — Store</title>
+</svelte:head>
+
 <div class="main">
 	<div class="drawer drawer-mobile">
 		<input id="main-drawer" type="checkbox" class="drawer-toggle" />

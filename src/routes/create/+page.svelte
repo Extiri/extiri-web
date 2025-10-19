@@ -64,6 +64,10 @@
 	}
 </script>
 
+<svelte:head>
+	<title>Extiri Snippets — Create</title>
+</svelte:head>
+
 <div class="main">
 	<div class="navbar bg-base-300 shadow">
 		<div class="flex-none">
