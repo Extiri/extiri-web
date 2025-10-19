@@ -62,4 +62,4 @@
 	});
 </script>
 
-<div class="code-editor" bind:this={codeEditorDiv} />
+<div class="code-editor" bind:this={codeEditorDiv}></div>

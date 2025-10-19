@@ -34,4 +34,4 @@
 	});
 </script>
 
-<div class="code-editor" bind:this={codeEditor} />
+<div class="code-editor" bind:this={codeEditor}></div>
