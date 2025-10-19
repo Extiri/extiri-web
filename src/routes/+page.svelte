@@ -340,8 +340,10 @@
 <div class="store-page">
 	<header class="store-header">
 		<div class="store-header__brand">
-			<button class="store-logo" on:click={() => goto('/')}>Extiri</button>
-			<p class="store-header__tagline">Snippets crafted for focused builders.</p>
+			<a class="store-logo" href="https://extiri.com" target="_blank" rel="noreferrer">
+				<img src="/extiri-text-only.png" alt="Extiri logo" />
+			</a>
+			<p class="store-header__tagline">snippex — handpicked code that saves time on every project.</p>
 		</div>
 		<div class="store-header__actions">
 			{#if isLoggedIn}
@@ -358,11 +360,8 @@
 	<section class="store-hero">
 		<div class="store-hero__content">
 			<p class="store-eyebrow">Extiri Snippet Library</p>
-			<h1>Apple-level polish for every snippet you ship.</h1>
-			<p>
-				Discover production-ready code ideas, explore handpicked categories, and copy clean solutions
-				in seconds. Refine your stack with confidence.
-			</p>
+			<h1>Thoughtful snippets that make shipping smoother.</h1>
+			<p>Explore snippex by Extiri, remix ready-made building blocks, and stay in flow while you build.</p>
 			<div class="store-hero__meta">
 				<div class="store-hero__stat">
 					<span>Catalog</span>
@@ -615,9 +614,8 @@
 
 	.store-logo {
 		width: fit-content;
-		font-size: clamp(1.5rem, 2.5vw, 2rem);
-		font-weight: 700;
-		color: #0f172a;
+		display: inline-flex;
+		align-items: center;
 		background: transparent;
 		border: none;
 		cursor: pointer;
@@ -627,6 +625,12 @@
 	.store-logo:focus-visible {
 		outline: 3px solid #0f172a;
 		outline-offset: 3px;
+	}
+
+	.store-logo img {
+		height: clamp(24px, 3vw, 32px);
+		width: auto;
+		display: block;
 	}
 
 	.store-header__tagline {
@@ -853,6 +857,8 @@
 	.sidebar-search__control {
 		display: flex;
 		gap: 0.5rem;
+		align-items: stretch;
+		flex-wrap: nowrap;
 	}
 
 	.sidebar-search__control input {
@@ -874,11 +880,21 @@
 		border: none;
 		padding: 0.65rem 0.95rem;
 		font-weight: 600;
+		flex-shrink: 0;
 		background-color: #0f172a;
 		color: #f8fafc;
 		cursor: pointer;
 	}
 
+	@media (max-width: 640px) {
+		.sidebar-search__control {
+			flex-direction: column;
+		}
+
+		.sidebar-search__control button {
+			width: 100%;
+		}
+	}
 	.sidebar-reset {
 		align-self: flex-start;
 		border: none;
@@ -1060,6 +1076,12 @@
 		border-bottom: 1px solid #e2e8f0;
 		background-color: #0b1120;
 		flex: 1 1 auto;
+		max-height: 340px;
+		overflow: auto;
+	}
+
+	.snippet-card__preview :global(.code-editor) {
+		max-height: 340px;
 	}
 
 	.snippet-card__footer {

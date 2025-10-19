@@ -128,8 +128,10 @@
 <div class="create-page">
 	<header class="create-header">
 		<div class="create-header__brand">
-			<button class="create-logo" on:click={() => goto('/')}>Extiri</button>
-			<span>Compose a beautiful snippet your team will actually reuse.</span>
+			<a class="create-logo" href="https://extiri.com" target="_blank" rel="noreferrer">
+				<img src="/extiri-text-only.png" alt="Extiri logo" />
+			</a>
+			<span>snippex helps you craft reusable snippets without breaking flow.</span>
 		</div>
 		<button class="create-header__link" on:click={() => goto('/')}>Back to Library</button>
 	</header>
@@ -137,11 +139,8 @@
 	<section class="create-hero">
 		<div>
 			<p class="create-eyebrow">Create snippet</p>
-			<h1>Share polished code in minutes.</h1>
-			<p>
-				Capture the intent, set context, and bring your snippet to life with a live preview. Add a
-				crisp description so future you knows exactly why it exists.
-			</p>
+			<h1>Capture the idea, ship the snippet.</h1>
+			<p>Describe the context, paste the code, and share it with teammates in a couple of clicks.</p>
 		</div>
 		<div class="create-actions">
 			<button class="primary" on:click={share} disabled={isSubmitting || !code.trim()}>
@@ -261,11 +260,16 @@
 	.create-logo {
 		border: none;
 		background: transparent;
-		font-weight: 700;
-		font-size: clamp(1.5rem, 3vw, 2rem);
+		display: inline-flex;
+		align-items: center;
 		cursor: pointer;
 		align-self: flex-start;
-		color: #0f172a;
+	}
+
+	.create-logo img {
+		height: clamp(24px, 3vw, 32px);
+		width: auto;
+		display: block;
 	}
 
 	.create-header__brand span {
@@ -447,8 +451,13 @@
 	.preview-editor {
 		border-radius: 1rem;
 		border: 1px solid #e2e8f0;
-		overflow: hidden;
+		overflow: auto;
 		background-color: #0b1120;
+		max-height: 420px;
+	}
+
+	.preview-editor :global(.code-editor) {
+		max-height: 420px;
 	}
 
 	.create-preview footer {

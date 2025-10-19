@@ -268,20 +268,19 @@
 <div class="account-page">
 	<header class="account-header">
 		<div class="account-header__brand">
-			<button class="account-logo" on:click={() => goto('/')}>Extiri</button>
-			<span>Keep your snippets in sync and personalise your library.</span>
+			<a class="account-logo" href="https://extiri.com" target="_blank" rel="noreferrer">
+				<img src="/extiri-text-only.png" alt="Extiri logo" />
+			</a>
+			<span>Manage your snippex workspace and keep your favourite snippets close.</span>
 		</div>
 		<button class="account-header__link" on:click={() => goto('/')}>Back to Library</button>
 	</header>
 
 	<section class="account-hero">
 		<div>
-			<p class="account-eyebrow">Your Extiri identity</p>
-			<h1>Smooth onboarding for every release.</h1>
-			<p>
-				Manage profile details, toggle your snippet feed, and own a personalised workspace that feels
-				as considered as your code.
-			</p>
+			<p class="account-eyebrow">Account</p>
+			<h1>Stay in control of your snippet space.</h1>
+			<p>Update details, manage access, and make sure the right snippets follow you everywhere.</p>
 		</div>
 		<div class="account-hero__panel">
 			{#if isLoggedIn}
@@ -303,8 +302,8 @@
 				{/await}
 			{:else}
 				<div class="account-hero__cta">
-					<h3>New to Extiri?</h3>
-					<p>Register to publish snippets, sync favourites, and build a private stash.</p>
+					<h3>New to snippex?</h3>
+					<p>Create an account to publish snippets, sync favourites, and build a private stash.</p>
 					<button type="button" on:click={scrollToRegister}>Create account</button>
 				</div>
 			{/if}
@@ -464,11 +463,16 @@
 	.account-logo {
 		border: none;
 		background: transparent;
-		font-weight: 700;
-		font-size: clamp(1.5rem, 3vw, 2rem);
+		display: inline-flex;
+		align-items: center;
 		cursor: pointer;
 		align-self: flex-start;
-		color: #0f172a;
+	}
+
+	.account-logo img {
+		height: clamp(24px, 3vw, 32px);
+		width: auto;
+		display: block;
 	}
 
 	.account-header__brand span {

@@ -162,9 +162,14 @@
 	.code-panel__editor {
 		flex: 1 1 auto;
 		border-radius: 1rem;
-		overflow: hidden;
+		overflow: auto;
 		border: 1px solid #e2e8f0;
 		background-color: #0b1120;
+		max-height: 600px;
+	}
+
+	.code-panel__editor :global(.code-editor) {
+		max-height: 600px;
 	}
 
 	.helper-text {
@@ -194,6 +199,21 @@
 	.toast-error {
 		background-color: #b91c1c;
 		color: #fef2f2;
+	}
+
+	.page-nav__logo {
+		display: inline-flex;
+		align-items: center;
+		border: none;
+		background: transparent;
+		padding: 0;
+		cursor: pointer;
+	}
+
+	.page-nav__logo img {
+		height: clamp(22px, 3vw, 30px);
+		width: auto;
+		display: block;
 	}
 
 	.loading-state {
@@ -604,10 +624,13 @@
 <div class="page">
 	<div class="navbar page-nav">
 		<div class="flex-1 flex items-center gap-3">
+			<a class="page-nav__logo" href="https://extiri.com" target="_blank" rel="noreferrer">
+				<img src="/extiri-text-only.png" alt="Extiri logo" />
+			</a>
 			<button class="btn btn-ghost text-base-100 normal-case text-lg font-semibold" on:click={() => goto('/')}>
-				Extiri Snippets
+				snippex library
 			</button>
-			<span class="hidden lg:inline text-sm opacity-70">Refined code, ready to reuse.</span>
+			<span class="hidden lg:inline text-sm opacity-70">A reliable home for reusable snippets.</span>
 		</div>
 		<div class="flex-none flex items-center gap-3">
 			<button
@@ -691,9 +714,7 @@
 						{/if}
 					</div>
 
-					<p class="helper-text">
-						Pro tip: keep this tab open while you iterate. All quick actions stay ready for your next copy.
-					</p>
+					<p class="helper-text">Keep this tab handy—every action stays ready for the next tweak.</p>
 				{:catch error}
 					<div class="error-state">
 						<h2>We hit a snag.</h2>
@@ -717,7 +738,7 @@
 					</div>
 				{:then snippet}
 					<div class="code-panel__header">
-						<h2>Live code preview</h2>
+						<h2>Snippet preview</h2>
 						<p>{countLines(snippet.code)} lines • {countCharacters(snippet.code)} characters</p>
 					</div>
 					<div class="code-panel__editor">
