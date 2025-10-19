@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onDestroy } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 	import '../app.css';
 	import { languages } from '../langStyles.js';
 	import { goto } from '$app/navigation';
@@ -73,6 +73,26 @@
 	let actionType: 'success' | 'error' | '' = '';
 	let messageTimeout: ReturnType<typeof setTimeout> | undefined;
 	let shareAvailable = browser && Boolean((navigator as ShareCapableNavigator).share);
+
+	// Custom select state
+	let showLangs = false;
+	let langSelectorEl: HTMLElement | null = null;
+
+	function handleOutsideClick(e: MouseEvent) {
+		if (!langSelectorEl) return;
+		if (!(e.target instanceof Node)) return;
+		if (!langSelectorEl.contains(e.target)) {
+			showLangs = false;
+		}
+	}
+
+	onMount(() => {
+		window.addEventListener('click', handleOutsideClick);
+	});
+
+	onDestroy(() => {
+		window.removeEventListener('click', handleOutsideClick);
+	});
 
 	function searchSnippets() {
 		currentPage = 1;
@@ -429,12 +449,32 @@
 
 			<section class="sidebar-card">
 				<h2>Language</h2>
-				<select bind:value={language} on:change={() => selectLanguage(language)}>
-					<option value="All">All languages</option>
-					{#each languages as option (option)}
-						<option value={option}>{option}</option>
-					{/each}
-				</select>
+				<!-- Custom select: matches app styling and provides accessible keyboard/mouse interaction -->
+				<div class="custom-select" bind:this={langSelectorEl}>
+					<button
+						type="button"
+						class="custom-select__control"
+						aria-haspopup="listbox"
+						aria-expanded={showLangs}
+						on:click={() => (showLangs = !showLangs)}
+					>
+						{language === 'All' ? 'All languages' : language}
+						<span class="custom-select__chev" aria-hidden="true">▾</span>
+					</button>
+
+					{#if showLangs}
+						<ul class="custom-select__list" role="listbox" tabindex="-1">
+							<li>
+								<button type="button" class="custom-select__option" on:click={() => selectLanguage('All')}>All languages</button>
+							</li>
+							{#each languages as option (option)}
+								<li>
+									<button type="button" class="custom-select__option" on:click={() => selectLanguage(option)}>{option}</button>
+								</li>
+							{/each}
+						</ul>
+					{/if}
+				</div>
 			</section>
 
 			<section class="sidebar-card">
@@ -919,6 +959,61 @@
 		padding: 0.65rem 0.9rem;
 		font-size: 0.95rem;
 		color: #0f172a;
+	}
+
+	/* Custom select styles */
+	.custom-select {
+		position: relative;
+		width: 100%;
+	}
+
+	.custom-select__control {
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 0.65rem 0.9rem;
+		border-radius: 0.75rem;
+		border: 1px solid #e2e8f0;
+		background: #fff;
+		color: #0f172a;
+		font-size: 0.95rem;
+		cursor: pointer;
+	}
+
+	.custom-select__chev {
+		margin-left: 0.5rem;
+		opacity: 0.7;
+	}
+
+	.custom-select__list {
+		position: absolute;
+		top: calc(100% + 8px);
+		left: 0;
+		right: 0;
+		background: #fff;
+		border: 1px solid #e2e8f0;
+		border-radius: 0.75rem;
+		box-shadow: 0 12px 24px rgba(15,23,42,0.08);
+		z-index: 30;
+		max-height: 260px;
+		overflow: auto;
+		padding: 0.35rem;
+	}
+
+	.custom-select__option {
+		width: 100%;
+		text-align: left;
+		padding: 0.5rem 0.75rem;
+		background: transparent;
+		border: none;
+		cursor: pointer;
+		font-size: 0.95rem;
+		color: #0f172a;
+	}
+
+	.custom-select__option:hover {
+		background: #f1f5f9;
 	}
 
 	.chip-group {
