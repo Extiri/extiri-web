@@ -379,7 +379,7 @@
 		<div class="store-hero__content">
 			<p class="store-eyebrow">Snippex Library</p>
 			<h1>Thoughtful snippets that make shipping smoother.</h1>
-			<p>Explore Snippex, remix ready-made building blocks, and stay in flow while you build.</p>
+			<p>Explore Snippex, a community remix of ready-made building blocks, and stay in flow while you build.</p>
 			<div class="store-hero__meta">
 				<div class="store-hero__stat">
 					<span>Catalog</span>

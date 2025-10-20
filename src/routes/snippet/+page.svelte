@@ -217,6 +217,8 @@
 		cursor: pointer;
 		font-family: 'Borel', cursive;
 		font-size: clamp(1.6rem, 3vw, 2.2rem);
+		position: relative;
+		margin-top: 10px;
 		color: #f8fafc;
 	}
 
