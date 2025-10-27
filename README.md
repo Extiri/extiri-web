@@ -1,4 +1,6 @@
-# Extiri Web
+# Snippex
+
+Snippex is an online database of various snippets. It's community-based and everyone can 
 
 Extiri Web is the place where Extiri's web apps are placed. Currently, there is only Snippets Store, so it is at root.
 
