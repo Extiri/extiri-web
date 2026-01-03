@@ -6,6 +6,7 @@
 	import escape from 'lodash.escape';
 	import md5 from 'md5';
 	import CodeMirror from '../CodeMirror.svelte';
+	import { PUBLIC_API_BASE_URL } from '$env/static/public';
 
 	const browser = typeof localStorage !== 'undefined';
 
@@ -176,7 +177,7 @@
 	async function getSnippets() {
 		isLoading = true;
 
-		let api = 'https://extiri.com/api/1/snippets/?';
+		let api = `${PUBLIC_API_BASE_URL}/api/1/snippets/?`;
 
 		api = api + 'page=' + currentPage;
 
@@ -307,7 +308,7 @@
 	async function getUserDetail() {
 		let token = getToken();
 
-		let response = await fetch('https://extiri.com/api/1/users/me/', {
+		let response = await fetch(`${PUBLIC_API_BASE_URL}/api/1/users/me/`, {
 			headers: { Authorization: 'Bearer ' + token }
 		});
 
@@ -361,7 +362,7 @@
 	<header class="store-header">
 		<div class="store-header__brand">
 			<button class="store-logo" on:click={() => goto('/')}>Snippex</button>
-			<span class="store-header__byline">Crafted by <a href="https://extiri.com" target="_blank" rel="noreferrer"><img style="height: 15px !important; display: inline;" src="/extiri-text-only.png" alt="Extiri logo" /></a></span>
+			<span class="store-header__byline">Crafted by <a href={PUBLIC_API_BASE_URL} target="_blank" rel="noreferrer"><img style="height: 15px !important; display: inline;" src="/extiri-text-only.png" alt="Extiri logo" /></a></span>
 		</div>
 		<div class="store-header__actions">
 			{#if isLoggedIn}
