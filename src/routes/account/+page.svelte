@@ -4,6 +4,7 @@
 	import { goto } from '$app/navigation';
 	import md5 from 'md5';
 	import escape from 'lodash.escape';
+	import { PUBLIC_API_BASE_URL } from '$env/static/public';
 
 	const browser = typeof window !== 'undefined';
 
@@ -72,7 +73,7 @@
 			password: newUserPassword
 		};
 
-		let response = await fetch('https://extiri.com/api/1/users/signup/', {
+		let response = await fetch(`${PUBLIC_API_BASE_URL}/api/1/users/signup/`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -106,7 +107,7 @@
 			password: loginPassword
 		};
 
-		let response = await fetch('https://extiri.com/api/1/users/delete/', {
+		let response = await fetch(`${PUBLIC_API_BASE_URL}/api/1/users/delete/`, {
 			method: 'DELETE',
 			headers: {
 				'Content-Type': 'application/json'
@@ -148,7 +149,7 @@
 
 		let encodedCredentials = window.btoa(credentials.email + ':' + credentials.password);
 
-		let response = await fetch('https://extiri.com/api/1/users/login/', {
+		let response = await fetch(`${PUBLIC_API_BASE_URL}/api/1/users/login/`, {
 			method: 'POST',
 			headers: {
 				Authorization: 'Basic ' + encodedCredentials,
@@ -215,7 +216,7 @@
 	async function getUserDetail() {
 		let token = getToken();
 
-		let response = await fetch('https://extiri.com/api/1/users/me/', {
+		let response = await fetch(`${PUBLIC_API_BASE_URL}/api/1/users/me/`, {
 			headers: {
 				Authorization: 'Bearer ' + token
 			}
@@ -390,7 +391,7 @@
 					<input type="checkbox" bind:checked={agreedToTermsOfService} />
 					<span
 						>I agree to the
-						<a href="https://extiri.com/codemenu/terms_of_services.html" target="_blank" rel="noreferrer"
+						<a href={`${PUBLIC_API_BASE_URL}/codemenu/terms_of_services.html`} target="_blank" rel="noreferrer"
 							>Terms of Service</a
 						>.</span
 					>
