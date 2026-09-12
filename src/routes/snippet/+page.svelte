@@ -260,6 +260,7 @@
 	import escape from 'lodash.escape';
 	import CodeMirror from '../../CodeMirror.svelte';
 	import sdk from '@stackblitz/sdk';
+	import { PUBLIC_API_BASE_URL } from '$env/static/public';
 
 	const browser = typeof window !== 'undefined';
 
@@ -522,7 +523,7 @@
 	}
 
 	async function getUser(id: string) {
-		let response = await fetch('https://extiri.com/api/1/users/get/' + id);
+		let response = await fetch(`${PUBLIC_API_BASE_URL}/api/1/users/get/` + id);
 
 		if (response.ok) {
 			let user = await (response.json() as Promise<User>);
@@ -536,7 +537,7 @@
 	async function getSnippetsDetail() {
 		if (browser) {
 			id = window.location.toString().split('?')[1];
-			let response = await fetch('https://extiri.com/api/1/snippets/get/' + id);
+			let response = await fetch(`${PUBLIC_API_BASE_URL}/api/1/snippets/get/` + id);
 
 			if (response.ok) {
 				let snippet = await (response.json() as Promise<Snippet>);
@@ -562,7 +563,7 @@
 			}
 
 			id = window.location.toString().split('?')[1];
-			let response = await fetch('https://extiri.com/api/1/snippets/delete/' + id, {
+			let response = await fetch(`${PUBLIC_API_BASE_URL}/api/1/snippets/delete/` + id, {
 				method: 'DELETE',
 				headers: { Authorization: 'Bearer ' + getToken() }
 			});
@@ -592,7 +593,7 @@
 	async function checkIfCreator() {
 		let token = getToken();
 
-		let response = await fetch('https://extiri.com/api/1/users/me/', {
+		let response = await fetch(`${PUBLIC_API_BASE_URL}/api/1/users/me/`, {
 			headers: { Authorization: 'Bearer ' + token }
 		});
 

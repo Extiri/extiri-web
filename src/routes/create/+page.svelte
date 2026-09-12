@@ -5,6 +5,7 @@
 	import CodeMirror from '../../CodeMirrorEditor.svelte';
 	import { languages } from '../../langStyles.js';
 	import { languageStore } from '../../store.js';
+	import { PUBLIC_API_BASE_URL } from '$env/static/public';
 
 	const categories = ['None', 'UI', 'Math', 'Collections', 'Automations', 'Debugging'];
 
@@ -51,7 +52,7 @@
 			code: code
 		};
 
-		let response = await fetch('https://extiri.com/api/1/snippets/create/', {
+		let response = await fetch(`${PUBLIC_API_BASE_URL}/api/1/snippets/create/`, {
 			method: 'POST',
 			headers: {
 				Authorization: 'Bearer ' + getToken(),
